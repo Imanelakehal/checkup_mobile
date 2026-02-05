@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "359895136956",
+    "project_id": "checkup-43fd5",
+    "storage_bucket": "checkup-43fd5.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:359895136956:android:9f19b3000a85bead276eb9",
+        "android_client_info": {
+          "package_name": "com.example.checkup_mobile"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBc07uUIbsA9qVPPWqR7ENENJmAJmjPCzI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

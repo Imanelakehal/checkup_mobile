@@ -1,8 +1,19 @@
 import 'package:checkup_mobile/features/presentation/pages/signup_page.dart';
 import 'package:flutter/material.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'firebase_options.dart';
 
-void main() {
-  runApp(const MyApp());
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized(); // Make sure Flutter is ready
+  await Firebase.initializeApp(              // Initialize Firebase
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
+
+  print('Firebase initialized');
+
+
+  runApp(const MyApp());      
+               // Then run your app
 }
 
 class MyApp extends StatelessWidget {
