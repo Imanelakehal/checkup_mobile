@@ -1,19 +1,18 @@
-import 'package:checkup_mobile/features/presentation/pages/signup_page.dart';
+import 'package:checkup_mobile/features/splash/presentation/pages/splash_page.dart';
+import 'package:checkup_mobile/features/auth/presentation/pages/signup_page.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
 
 void main() async {
-  WidgetsFlutterBinding.ensureInitialized(); // Make sure Flutter is ready
-  await Firebase.initializeApp(              // Initialize Firebase
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
 
-  print('Firebase initialized');
+  print('Firebase initialized');  // Check if this prints
 
-
-  runApp(const MyApp());      
-               // Then run your app
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
@@ -22,13 +21,16 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'MedFinder',
+      title: 'CheckUp',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+        colorScheme: ColorScheme.fromSeed(seedColor: const Color(0xFF344E41)),
         useMaterial3: true,
       ),
-      home: const SignUpPage(),
+      home: const SplashPage(),  // Make sure this is SplashPage, not SignUpPage
+      routes: {
+        '/signup': (context) => const SignUpPage(),
+      },
     );
   }
 }
