@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'dart:async';
 
+/// SPLASH SCREEN - Fullscreen logo version
+/// Logo image fills the entire screen
+
 class SplashPage extends StatefulWidget {
   const SplashPage({Key? key}) : super(key: key);
 
@@ -8,7 +11,9 @@ class SplashPage extends StatefulWidget {
   State<SplashPage> createState() => _SplashPageState();
 }
 
-class _SplashPageState extends State<SplashPage> with SingleTickerProviderStateMixin {
+class _SplashPageState extends State<SplashPage> 
+    with SingleTickerProviderStateMixin {
+  
   late AnimationController _animationController;
   late Animation<double> _fadeAnimation;
 
@@ -16,7 +21,7 @@ class _SplashPageState extends State<SplashPage> with SingleTickerProviderStateM
   void initState() {
     super.initState();
     
-    // Setup fade animation for logo
+    // Setup fade animation
     _animationController = AnimationController(
       vsync: this,
       duration: const Duration(milliseconds: 1500),
@@ -33,13 +38,42 @@ class _SplashPageState extends State<SplashPage> with SingleTickerProviderStateM
   }
 
   Future<void> _navigateToNext() async {
-    // Wait 3 seconds to show splash
     await Future.delayed(const Duration(seconds: 3));
     
     if (!mounted) return;
     
-    // Go directly to onboarding
+    final shouldShowOnboarding = await _checkFirstTime();
+    final isLoggedIn = await _checkAuthStatus();
+    
+    if (!mounted) return;
+    
+    if (shouldShowOnboarding) {
+      _navigateToOnboarding();
+    } else if (isLoggedIn) {
+      _navigateToHome();
+    } else {
+      _navigateToAuth();
+    }
+  }
+
+  Future<bool> _checkFirstTime() async {
+    return true; // For now, always show onboarding
+  }
+
+  Future<bool> _checkAuthStatus() async {
+    return false; // For now, user not logged in
+  }
+
+  void _navigateToOnboarding() {
     Navigator.of(context).pushReplacementNamed('/onboarding');
+  }
+
+  void _navigateToAuth() {
+    Navigator.of(context).pushReplacementNamed('/signup');
+  }
+
+  void _navigateToHome() {
+    Navigator.of(context).pushReplacementNamed('/home');
   }
 
   @override
@@ -51,14 +85,17 @@ class _SplashPageState extends State<SplashPage> with SingleTickerProviderStateM
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFF344E41),
-      body: Center(
-        child: FadeTransition(
-          opacity: _fadeAnimation,
+      // NO background color - logo image provides background
+      body: FadeTransition(
+        opacity: _fadeAnimation,
+        child: SizedBox(
+          // Fill entire screen
+          width: double.infinity,
+          height: double.infinity,
           child: Image.asset(
-            'assets/images/logo.png',
-            width: 200,
-            height: 200,
+            'assets/images/paramap_logo.png',
+            // FILL the screen - image covers everything
+            fit: BoxFit.cover,
           ),
         ),
       ),
