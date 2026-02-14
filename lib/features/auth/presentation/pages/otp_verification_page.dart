@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:pinput/pinput.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';  // ← ADD THIS
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'dart:async';
+import 'success_page.dart'; 
 
 class OTPVerificationPage extends StatefulWidget {
   final String verificationId;
@@ -33,6 +34,10 @@ class _OTPVerificationPageState extends State<OTPVerificationPage> {
   void initState() {
     super.initState();
     _startResendTimer();
+    print('🔵 OTP Page loaded');
+    print('🔵 Verification ID: ${widget.verificationId}');
+    print('🔵 Phone: ${widget.phoneNumber}');
+    print('🔵 User: ${widget.userName}');
   }
 
   @override
@@ -56,6 +61,9 @@ class _OTPVerificationPageState extends State<OTPVerificationPage> {
   }
 
   Future<void> _verifyOTP() async {
+    print('🟡 Verify button clicked');
+    print('🟡 OTP entered: ${_otpController.text}');
+    
     if (_otpController.text.length != 6) {
       _showError('Please enter 6-digit code');
       return;
@@ -66,34 +74,63 @@ class _OTPVerificationPageState extends State<OTPVerificationPage> {
     });
 
     try {
+      print('🟢 Creating credential...');
+      
       // Create credential with verification ID and OTP
       PhoneAuthCredential credential = PhoneAuthProvider.credential(
         verificationId: widget.verificationId,
         smsCode: _otpController.text,
       );
 
+      print('🟢 Signing in with credential...');
+      
       // Sign in with credential
       UserCredential userCredential = await _auth.signInWithCredential(credential);
 
+      print('🟢 Sign in successful!');
+      print('🟢 User ID: ${userCredential.user?.uid}');
+
       // Save user data to Firestore
       if (userCredential.user != null) {
+        print('🟢 Saving user to Firestore...');
         await _saveUserToFirestore(userCredential.user!);
+        print('🟢 User saved successfully!');
         
-        // Navigate to home
+        // Navigate to success page
+        print('🟢 Navigating to Success page...');
         if (mounted) {
-          Navigator.of(context).pushReplacementNamed('/home');
+          Navigator.of(context).pushReplacement(
+            MaterialPageRoute(
+              builder: (context) {
+                print('🟢 Building SuccessPage...');
+                return SuccessPage(userName: widget.userName);
+              },
+            ),
+          );
+        } else {
+          print('🔴 Widget not mounted - cannot navigate');
         }
+      } else {
+        print('🔴 User is null after sign in');
       }
     } on FirebaseAuthException catch (e) {
+      print('🔴 Firebase Auth Error: ${e.code}');
+      print('🔴 Error message: ${e.message}');
+      
       String message = 'Verification failed';
       
       if (e.code == 'invalid-verification-code') {
         message = 'Invalid code. Please try again.';
       } else if (e.code == 'session-expired') {
         message = 'Code expired. Please request a new one.';
+      } else {
+        message = e.message ?? 'Unknown error';
       }
       
       _showError(message);
+    } catch (e) {
+      print('🔴 Unknown error: $e');
+      _showError('Something went wrong: $e');
     } finally {
       if (mounted) {
         setState(() {
@@ -106,12 +143,19 @@ class _OTPVerificationPageState extends State<OTPVerificationPage> {
   Future<void> _saveUserToFirestore(User user) async {
     final firestore = FirebaseFirestore.instance;
     
-    await firestore.collection('users').doc(user.uid).set({
-      'name': widget.userName,
-      'phoneNumber': widget.phoneNumber,
-      'createdAt': FieldValue.serverTimestamp(),
-      'isActive': true,
-    }, SetOptions(merge: true));
+    try {
+      await firestore.collection('users').doc(user.uid).set({
+        'name': widget.userName,
+        'phoneNumber': widget.phoneNumber,
+        'createdAt': FieldValue.serverTimestamp(),
+        'isActive': true,
+      }, SetOptions(merge: true));
+      
+      print('✅ Firestore save complete');
+    } catch (e) {
+      print('🔴 Firestore error: $e');
+      // Don't block navigation even if Firestore fails
+    }
   }
 
   Future<void> _resendCode() async {
@@ -133,8 +177,6 @@ class _OTPVerificationPageState extends State<OTPVerificationPage> {
         codeSent: (String verificationId, int? resendToken) {
           _showSuccess('Code sent successfully!');
           _startResendTimer();
-          // Update verification ID
-          // Note: In production, you'd need to update this in parent
         },
         codeAutoRetrievalTimeout: (String verificationId) {},
         timeout: const Duration(seconds: 60),
@@ -218,7 +260,10 @@ class _OTPVerificationPageState extends State<OTPVerificationPage> {
               
               // Back button
               GestureDetector(
-                onTap: () => Navigator.pop(context),
+                onTap: () {
+                  print('🔵 Back button pressed');
+                  Navigator.pop(context);
+                },
                 child: const Icon(
                   Icons.arrow_back,
                   size: 24,
@@ -285,6 +330,7 @@ class _OTPVerificationPageState extends State<OTPVerificationPage> {
                   focusedPinTheme: focusedPinTheme,
                   submittedPinTheme: submittedPinTheme,
                   onCompleted: (pin) {
+                    print('🟡 PIN completed: $pin');
                     // Auto-verify when 6 digits entered
                     _verifyOTP();
                   },
