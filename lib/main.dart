@@ -1,7 +1,7 @@
 import 'package:checkup_mobile/features/splash/presentation/pages/splash_page.dart';
 import 'package:checkup_mobile/features/onboarding/presentation/pages/onboarding_page.dart'; 
-import 'package:checkup_mobile/features/auth/presentation/pages/signup_page.dart';
-import 'package:checkup_mobile/features/auth/presentation/pages/login_page.dart';
+import 'package:checkup_mobile/features/auth/presentation/pages/authentication.dart';
+import 'package:checkup_mobile/features/auth/presentation/pages/otp_verification_page.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
@@ -33,7 +33,7 @@ class MyApp extends StatelessWidget {
       routes: {
         '/onboarding': (context) => const OnboardingPage(), 
         '/signup': (context) => const SignUpPage(),
-        '/login': (context) => const LoginPage(), 
+        '/login': (context) => const LoginPage(),
       },
     );
   }
