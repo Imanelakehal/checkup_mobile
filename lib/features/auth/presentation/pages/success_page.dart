@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'dart:async';
+import 'package:checkup_mobile/features/home/presentation/pages/location_permission_page.dart';
 
 class SuccessPage extends StatefulWidget {
   final String userName;
@@ -48,7 +49,11 @@ class _SuccessPageState extends State<SuccessPage> with SingleTickerProviderStat
     // Auto-navigate to home after 3 seconds
     Timer(const Duration(seconds: 3), () {
       if (mounted) {
-        Navigator.of(context).pushReplacementNamed('/home');
+        Navigator.of(context).pushReplacement(
+          MaterialPageRoute(
+           builder: (context) => const LocationPermissionPage(),
+     ),
+     );
       }
     });
   }

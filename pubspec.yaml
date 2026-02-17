@@ -15,6 +15,8 @@ dependencies:
   cupertino_icons: ^1.0.8
   flutter_svg: ^2.0.9 
   pinput: ^3.0.1 
+  geolocator: ^10.1.0
+  permission_handler: ^11.2.0
 
 
 
