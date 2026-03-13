@@ -2,7 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 class HomePage extends StatelessWidget {
-  const HomePage({Key? key}) : super(key: key);
+  final double? latitude;
+  final double? longitude;
+
+  const HomePage({Key? key, this.latitude, this.longitude}) : super(key: key);
 
   Future<void> _handleLogout(BuildContext context) async {
     await FirebaseAuth.instance.signOut();

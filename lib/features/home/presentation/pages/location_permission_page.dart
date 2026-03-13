@@ -93,12 +93,12 @@ class _LocationPermissionPageState extends State<LocationPermissionPage> {
       // Navigate to home with location
       if (mounted) {
         Navigator.of(context).pushReplacementNamed(
-          '/home',
-          arguments: {
-            'latitude': position.latitude,
-            'longitude': position.longitude,
-          },
-        );
+          '/account-type',
+         arguments: {
+           'latitude': position.latitude,
+           'longitude': position.longitude,
+         },
+       );
       }
     } catch (e) {
       print('🔴 Error getting location: $e');
@@ -129,8 +129,8 @@ class _LocationPermissionPageState extends State<LocationPermissionPage> {
   }
 
   void _skipForNow() {
-    // Allow user to skip location (they can enable later)
-    Navigator.of(context).pushReplacementNamed('/home');
+    // Allow user to skip location (they can enable later ofc from settings)
+  Navigator.of(context).pushReplacementNamed('/account-type');
   }
 
   @override

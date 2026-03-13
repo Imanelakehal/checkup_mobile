@@ -3,6 +3,7 @@ import 'package:checkup_mobile/features/onboarding/presentation/pages/onboarding
 import 'package:checkup_mobile/features/auth/presentation/pages/authentication.dart';
 import 'package:checkup_mobile/features/auth/presentation/pages/otp_verification_page.dart';
 import 'package:checkup_mobile/features/home/presentation/pages/home_page.dart';
+import 'package:checkup_mobile/features/Onboarding/presentation/pages/account_type_selection.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
@@ -36,6 +37,8 @@ class MyApp extends StatelessWidget {
         '/signup': (context) => const SignUpPage(),
         '/login': (context) => const LoginPage(),
         '/home': (context) => const HomePage(), 
+        '/account-type': (context) => const AccountTypeSelectionPage(),
+
       },
     );
   }

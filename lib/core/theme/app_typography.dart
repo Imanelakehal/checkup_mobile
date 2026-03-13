@@ -176,7 +176,7 @@ class AppTypography {
     height: 1.3,
   );
   
-  // Overline - For supertitles (ALL CAPS recommended)
+  // Overline - For supertitles 
   static const overline = TextStyle(
     fontSize: 11,
     fontWeight: FontWeight.w600,
