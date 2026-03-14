@@ -77,23 +77,7 @@ class _SuccessPageState extends State<SuccessPage> with SingleTickerProviderStat
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                // Logo at top center
-                FadeTransition(
-                  opacity: _fadeAnimation,
-                  child: Container(
-                    width: 100,
-                    height: 100,
-                    decoration: BoxDecoration(
-                      color: const Color(0xFF344E41),
-                      borderRadius: BorderRadius.circular(20),
-                    ),
-                    child: const Icon(
-                      Icons.medical_services,
-                      color: Colors.white,
-                      size: 50,
-                    ),
-                  ),
-                ),
+        
                 
                 const SizedBox(height: 60),
                 
