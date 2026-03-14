@@ -1,7 +1,6 @@
 import 'package:checkup_mobile/features/splash/presentation/pages/splash_page.dart';
 import 'package:checkup_mobile/features/onboarding/presentation/pages/onboarding_page.dart'; 
 import 'package:checkup_mobile/features/auth/presentation/pages/authentication.dart';
-import 'package:checkup_mobile/features/auth/presentation/pages/otp_verification_page.dart';
 import 'package:checkup_mobile/features/home/presentation/pages/home_page.dart';
 import 'package:checkup_mobile/features/Onboarding/presentation/pages/account_type_selection.dart';
 import 'package:flutter/material.dart';

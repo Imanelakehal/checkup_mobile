@@ -7,10 +7,10 @@ class HomePage extends StatefulWidget {
   final double? longitude;
 
   const HomePage({
-    Key? key,
+    super.key,
     this.latitude,
     this.longitude,
-  }) : super(key: key);
+  });
 
   @override
   State<HomePage> createState() => _HomePageState();
@@ -19,7 +19,6 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   // ParaMap brand colors
   static const Color primaryGreen = Color(0xFF344E41);
-  static const Color secondaryGreen = Color(0xFF588157);
   static const Color lightGreen = Color(0xFFA3B18A);
   static const Color backgroundColor = Color(0xFFF8F9FA);
 

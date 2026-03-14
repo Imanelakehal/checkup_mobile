@@ -1,3 +1,5 @@
+// ignore_for_file: deprecated_member_use
+
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -8,10 +10,10 @@ class HomePage extends StatefulWidget {
   final double? longitude;
 
   const HomePage({
-    Key? key,
+    super.key,
     this.latitude,
     this.longitude,
-  }) : super(key: key);
+  });
 
   @override
   State<HomePage> createState() => _HomePageState();
@@ -65,6 +67,7 @@ class _HomePageState extends State<HomePage> {
       }
     } catch (e) {
       // Keep default name if error
+      // ignore: avoid_print
       print('Error loading user name: $e');
     }
   }
@@ -89,6 +92,7 @@ class _HomePageState extends State<HomePage> {
     return 12742 * asin(sqrt(a)); // 2 * R; R = 6371 km
   }
 
+  // ignore: unused_element
   String _formatDistance(double distanceKm) {
     if (distanceKm < 1) {
       return '${(distanceKm * 1000).toStringAsFixed(0)} m';
